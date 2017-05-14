@@ -33,7 +33,7 @@ public class AdminServiceImpl implements AdminService {
             admin = adminRepository.findByMobile(account);
         }
         if (flag == 2){
-            admin = adminRepository.findByMobile(account);
+            admin = adminRepository.findByEmail(account);
         }
         return admin;
     }
@@ -41,15 +41,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public HttpStatus add(Admin admin) {
         Boolean flag = true;
+        Admin admin1 = null;
         if (admin.getEmail() != null){
-            flag = false;
-            return HttpStatus.CONFLICT;
+           admin1 = adminRepository.findByEmail(admin.getEmail());
+            if (admin1 != null){
+                flag = false;
+                return HttpStatus.CONFLICT;
+            }
         }
         if (admin.getMobile() != null){
-            flag = false;
-            return HttpStatus.CONFLICT;
+            admin1 = adminRepository.findByMobile(admin.getMobile());
+            if (admin1 != null){
+                flag = false;
+                return HttpStatus.CONFLICT;
+            }
         }
         if (flag) {
+            // todo 加密
             adminRepository.save(admin);
             return HttpStatus.OK;
         }
@@ -58,7 +66,31 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public HttpStatus update(Admin admin) {
-        return null;
+        String account = admin.getAccount();
+        Admin admin1 = null;
+        admin1 = findAdminByAccount(account);
+        if (admin1 == null) {
+            return HttpStatus.NOT_FOUND;
+        }
+        if (admin.getMobile() != null){
+            admin1.setMobile(admin.getMobile());
+        }
+        if (admin.getEmail() != null) {
+            admin1.setEmail(admin.getEmail());
+        }
+        if (admin.getPwd() != null) {
+            //todo 加密
+            admin1.setPwd(admin.getPwd());
+        }
+        if (admin.getDepartment() != null) {
+            admin1.setDepartment(admin.getDepartment());
+        }
+//        if (admin.getAdminRoles() != null && admin.getAdminRoles().size()>0){
+//            admin.getAdminRoles().addAll(admin.getAdminRoles());
+//            admin1.setAdminRoles(admin.getAdminRoles());
+//        }
+        adminRepository.save(admin1);
+        return HttpStatus.OK;
     }
 
     @Override

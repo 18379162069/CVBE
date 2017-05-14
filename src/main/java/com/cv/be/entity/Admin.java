@@ -8,10 +8,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -48,7 +50,7 @@ public class Admin implements Serializable{
     @Column(name = "salt", nullable = false)
     private String salt;          //盐
 
-    @Column
+    @Column(name = "is_locked")
     private boolean isLocked;      //账号是否锁定
 
     @CreationTimestamp
@@ -61,9 +63,9 @@ public class Admin implements Serializable{
     @Column(name = "update_on", length = 29, updatable = false)
     private LocalDateTime updatedOn;  //更新时间
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
-    private List<AdminRole> adminRoles = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name = "admin_id")
+    private List<AdminRole> adminRoles;
 
     public Integer getId() {
         return id;
@@ -143,6 +145,25 @@ public class Admin implements Serializable{
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public List<AdminRole> getAdminRoles() {
+        return adminRoles;
+    }
+
+    public void setAdminRoles(List<AdminRole> adminRoles) {
+        this.adminRoles = adminRoles;
+    }
+
+    public String getAccount(){
+        if (this.email != null){
+            return this.email;
+        }
+
+        if (this.mobile != null) {
+            return this.mobile;
+        }
+        return null;
     }
 
 }

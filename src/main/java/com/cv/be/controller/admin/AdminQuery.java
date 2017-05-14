@@ -28,19 +28,20 @@ public class AdminQuery {
      */
     @GetMapping("/{id}")
     @ResponseBody
-    ResponseEntity<HttpStatus> findAdminUserByAccount(@RequestParam String account){
+    ResponseEntity<Admin> findAdminUserByAccount(@RequestParam String account){
         Admin admin = null;
         if (account != null && !account.equals("")){
            admin =  adminService.findAdminByAccount(account);
             if (admin != null) {
-                return ResponseEntity.ok(HttpStatus.CONFLICT);
+                return ResponseEntity.ok(admin);
             } else {
-                return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+                return ResponseEntity.ok(admin);
             }
         } else {
-            return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.ok(admin);
         }
 
     }
+
 
 }
