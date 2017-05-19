@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -23,9 +24,9 @@ public class AdminCommand {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/{id}")
+    @PostMapping("/add")
     @ResponseBody
-    public ResponseEntity<HttpStatus> add(@PathVariable Integer id, @RequestBody Admin admin){
+    public ResponseEntity<HttpStatus> add(@RequestParam String adminName, @RequestBody Admin admin){
         HttpStatus httpStatus = null;
         if (admin != null)
         {
@@ -34,9 +35,9 @@ public class AdminCommand {
         return ResponseEntity.ok(httpStatus);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{adminName}")
     @ResponseBody
-    public ResponseEntity<HttpStatus> update(@PathVariable Integer id, @RequestBody Admin admin){
+    public ResponseEntity<HttpStatus> update(@PathVariable String adminName, @RequestBody Admin admin){
         HttpStatus httpStatus = null;
         if (admin != null) {
             httpStatus = adminService.update(admin);

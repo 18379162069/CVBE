@@ -1,6 +1,7 @@
 package com.cv.be.service;
 
 import com.cv.be.entity.Admin;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -55,4 +56,11 @@ public interface AdminService {
      * @param admin
      */
     void delete(Admin admin);
+
+    /**
+     * 查询所有的管理员信息
+     */
+    List<Admin> getAll(PageRequest pageRequest);
+
+
 }

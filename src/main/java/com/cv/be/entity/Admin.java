@@ -47,7 +47,7 @@ public class Admin implements Serializable{
     @Column(name = "pwd", nullable = false)
     private String pwd;           //管理员密码
 
-    @Column(name = "salt", nullable = false)
+    @Column(name = "salt")
     private String salt;          //盐
 
     @Column(name = "is_locked")

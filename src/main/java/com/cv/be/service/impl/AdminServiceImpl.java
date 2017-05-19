@@ -5,6 +5,7 @@ import com.cv.be.repository.AdminRepository;
 import com.cv.be.service.AdminService;
 import com.cv.be.utils.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class AdminServiceImpl implements AdminService {
         }
         if (flag) {
             // todo 加密
+            admin.setPwd(CommonUtil.MD5Encr(admin.getPwd()));
             adminRepository.save(admin);
             return HttpStatus.OK;
         }
@@ -96,5 +98,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void delete(Admin admin) {
 
+    }
+
+    @Override
+    public List<Admin> getAll(PageRequest pageRequest) {
+
+        return adminRepository.findAll(pageRequest).getContent();
     }
 }

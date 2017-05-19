@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.cv.be.utils.CommonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

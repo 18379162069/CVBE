@@ -22,8 +22,11 @@ public class CV {
     @GeneratedValue
     private Integer id;
 
+    @Column(name = "admin_name")
+    private String adminName;                     //管理员姓名
+
     @Column(name = "user_id")
-    private Integer userId;                     //创建人Id
+    private Integer userId;                     //管理员姓名
 
     @Column(name = "basic_info",length = 5000)
     private String basicInfo;                  //基本信息
@@ -97,5 +100,13 @@ public class CV {
 
     public void setUpdatedOn(LocalDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
     }
 }

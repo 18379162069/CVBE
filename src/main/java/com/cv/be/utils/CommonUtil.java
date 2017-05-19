@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.crypto.hash.SimpleHash;
 
 
 /**
@@ -218,4 +219,15 @@ public class CommonUtil {
         }
         return ip;
     }
+
+    public static String MD5Encr (String  pwd){
+        int hashIterations = 1;//加密的次数
+        Object salt = null;//盐值
+        Object credentials = pwd;//密码
+        String hashAlgorithmName = "MD5";//加密方式
+        Object simpleHash = new SimpleHash(hashAlgorithmName, credentials,
+                salt, hashIterations);
+        return  simpleHash.toString();
+    }
+
 }
